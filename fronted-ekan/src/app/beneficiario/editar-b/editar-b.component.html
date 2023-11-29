@@ -1,0 +1,42 @@
+<mat-card style="width: 400px;">
+    <mat-card-header class="col-xs-12" style="padding: 40px 20px;">
+        <mat-card-title>Editar Beneficiário</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="d-flex" style="height: 80%;">
+        <form [formGroup]="form"  class="form-principal container">
+            <div class="row">
+                <mat-form-field class="col-xs-12"> 
+                    <mat-label>Nome</mat-label>
+                    <input #nome matInput formControlName="nome" style="width: 400px;"> 
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="col-xs-12">
+                    <mat-label>Telefone</mat-label>
+                    <input mask="(00) 0 0000-0000" #telefone matInput formControlName="telefone" style="width: 400px;" [dropSpecialCharacters]="false"> 
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="col-xs-12">
+                    <mat-label>Data Nasciemento</mat-label>
+                    <input mask="00/00/0000" #dataNascimento matInput formControlName="dataNascimento" style="width: 400px;" [dropSpecialCharacters]="false"> 
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="col-xs-12">
+                    <mat-label>Documentos</mat-label>
+                    <mat-select #select  formControlName="documentoId" multiple style="width: 400px;">
+                      @for (doc of docs; track doc) {
+                        <mat-option [value]="doc.id">{{doc.descricao}}</mat-option>
+                      }
+                    </mat-select>
+                  </mat-form-field>
+            </div>
+        </form>
+    </mat-card-content>
+    <mat-card-actions>
+        <button [disabled]="!this.form.valid" (click)="salvar()" type="button"  class="btn btn btn-primary">Salvar</button>
+        <button (click)="cancelar()" type="button"  class="btn btn btn-danger" style="margin-left:20px;">Cancelar</button>
+    </mat-card-actions>
+</mat-card>
+        
