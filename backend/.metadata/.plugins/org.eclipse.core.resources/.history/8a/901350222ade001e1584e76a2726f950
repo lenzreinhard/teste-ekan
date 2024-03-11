@@ -1,0 +1,6 @@
+package com.ekan.teste.entity;
+
+public class download {
+	
+	public int download;
+}

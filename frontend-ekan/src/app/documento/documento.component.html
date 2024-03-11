@@ -1,0 +1,37 @@
+<div class="card" style="width: 100%;background-color:purple !important;">
+    <h3 style="padding: 25px 40px; color: white;">Documentos</h3>
+    <div class="card-header">
+        <a class="btn btn-secondary" (click)="authenticate()">Autenticar</a>
+        <a class="btn btn-success" (click)="novo()" style="margin-left: 25px;">Criar Novo [+]</a>
+        <a class="btn btn-primary" href="/" style="margin-left: 25px;">Beneficiários</a>
+    </div>
+    <div class="card-body">
+        <table datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger" class="table table-bordered">
+            <thead class="bg-dark text-white">
+                <tr>
+                    <td>Id</td>
+                    <td>Tipo Documento</td>
+                    <td>Descrição</td>
+                    <td>Data Inclusão</td>
+                    <td>Data Atualização</td>
+                    <td>Documento</td>
+                    <td>Ação</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of documentos">
+                    <td>{{item.id}}</td>
+                    <td>{{item.tipoDocumento}}</td>
+                    <td>{{item.descricao}}</td>
+                    <td>{{item.dataInclusao  | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
+                    <td>{{item.dataAtualizacao   | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
+                    <td><a class="btn btn-secondary" (click)="save(item)">Baixar documento</a></td>
+                    <td style="width: 15%">
+                        <a class="btn btn-primary" (click)="editar(item)">Editar</a> 
+                        <a class="btn btn-danger" (click)="excluir(item.id)" style="margin-left: 25px;">Excluir</a> 
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

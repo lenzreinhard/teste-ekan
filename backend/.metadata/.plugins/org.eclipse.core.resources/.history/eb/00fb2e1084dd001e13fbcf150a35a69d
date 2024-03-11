@@ -1,0 +1,15 @@
+package com.ekan.teste.repository;
+
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.ekan.teste.entity.Documento;
+
+@Repository
+public interface DocumentoRepository extends JpaRepository<Documento, Long>{
+	
+	Optional<Documento> findByName(String filename);
+}
+

@@ -1,0 +1,78 @@
+package com.ekan.teste.controller;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+import java.util.Collections;
+import org.springframework.beans.BeanUtils;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.ekan.teste.entity.Documento;
+
+import com.ekan.teste.repository.DocumentoRepository;
+
+@RestController
+@RequestMapping("/documento")
+@CrossOrigin
+public class DocumentoController {
+	private final DocumentoRepository documentoRepository;
+	DocumentoController(DocumentoRepository documentoRepository) {
+        this.documentoRepository = documentoRepository;
+    }
+	
+	@GetMapping
+	public List<Documento> listar() {
+		List<Documento> doc = this.documentoRepository.findAll();
+	}
+	
+	@PostMapping
+	@ResponseStatus(HttpStatus.CREATED)
+	public Documento adicionar(@RequestBody Documento documento)
+	{
+		documento.setDataInclusao(new Date());
+		documento.setDataAtualizacao(new Date());		
+		return this.documentoRepository.save(documento);
+	}
+	
+	@PutMapping("/{id}")
+	public ResponseEntity<Object> atualizar(@PathVariable(value="id")Long id,@RequestBody Documento documento)
+	{
+		documento.setDataAtualizacao(new Date());
+		Optional<Documento> documentoToUpdate = this.documentoRepository.findById(id);
+		if(!documentoToUpdate.isPresent())
+		{
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Documento não encontrado!");
+		}
+		documento.setDataInclusao(documentoToUpdate.get().getDataInclusao());
+		Documento documentoDTO = new Documento();
+		BeanUtils.copyProperties(documento, documentoDTO);
+		documentoDTO.setId(documentoToUpdate.get().getId());
+		return ResponseEntity.status(HttpStatus.OK).body(this.documentoRepository.save(documentoDTO));
+	}
+	
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Object> delete(@PathVariable(value="id")Long id)
+	{
+
+		Optional<Documento> documentoUpdated = this.documentoRepository.findById(id);
+		if(!documentoUpdated.isPresent())
+		{
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Documento não encontrado!");
+		}
+		Documento documentoDTO = new Documento();
+		BeanUtils.copyProperties(documentoUpdated.get(), documentoDTO);
+		this.documentoRepository.deleteById(id);
+		return ResponseEntity.status(HttpStatus.OK).body(documentoDTO);
+	}
+}

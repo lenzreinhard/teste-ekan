@@ -1,0 +1,34 @@
+<mat-card>
+    <mat-card-header class="col-xs-12" style="padding: 40px 20px;">
+        <mat-card-title>Adicionar Documento</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="d-flex" style="height: 80%;">
+        <form [formGroup]="form"  class="form-principal container" enctype="multipart/form-data">
+            <div class="row" style="display: none;;">
+                <mat-form-field class="col-xs-12"> 
+                    <mat-label>Tipo Documento</mat-label>
+                    <input #tipoDocumento matInput formControlName="tipoDocumento" type="text" style="color: blue;"> 
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field class="col-xs-12">
+                    <mat-label>Descrição</mat-label>
+                    <input #descricao matInput formControlName="descricao" type="text" style="color: blue;">
+                </mat-form-field>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <button color="warn" mat-button (click)="documento.click()">Documento</button>
+                    <input #documento type="file" hidden="true" (change)="onchange($event)" formControlName="documento"/>
+                    <section *ngIf="documento.files?.length" style="color: blueviolet;">{{documento.files![0].name}}</section>
+                </div>
+            </div>
+        </form>
+    </mat-card-content>
+    <mat-card-actions>
+        <button [disabled]="!this.form.valid" (click)="salvar()" type="button"  class="btn btn btn-primary">Salvar</button>
+        <button (click)="cancelar()" type="button"  class="btn btn btn-danger" style="margin-left:20px;">Cancelar</button>
+    </mat-card-actions>
+</mat-card>
+        

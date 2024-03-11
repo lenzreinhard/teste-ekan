@@ -1,0 +1,9 @@
+package com.ekan.teste.entity;
+
+import jakarta.persistence.Entity;
+
+@Entity
+public class download {
+	
+	public int download;
+}
