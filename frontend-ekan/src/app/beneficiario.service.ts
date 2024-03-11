@@ -36,7 +36,7 @@ export class BeneficiarioService{
   public excluiBeneficiario(id:any)
   {
     this.setToken();
-    return this.http.delete(`${host}/beneficiario/${id}`);
+    return this.http.delete(`${host}/beneficiario/${id}`,{headers:this.headers});
   }
 
   private beneficiarioSelecionado:any=[];
