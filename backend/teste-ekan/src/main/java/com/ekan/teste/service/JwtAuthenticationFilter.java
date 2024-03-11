@@ -34,7 +34,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
   @Autowired
   private UserRepository userRepository;
   
-  @Bean
   @Autowired
   public UserDetailsService userDetailsService(UserRepository repository) {
       return new CustomUserDetailService(repository);
